@@ -45,8 +45,8 @@ Backend repo : https://github.com/ajayv2001/bookmanagement-backend
 → Google Books API integration<br/>
 → Docker (for Render deployment)
 
-### How to Run Locally
-## Backend Setup (Spring Boot)
+## How to Run Locally
+### Backend Setup (Spring Boot)
 
  1. Clone the repo:<br/>
 ```
@@ -64,7 +64,7 @@ server.port=8080
 ```
 > Ensure you have Java 21 installed locally.
 
-## Frontend Setup (React)
+### Frontend Setup (React)
 
  1. Clone the repo:<br/>
 ```
