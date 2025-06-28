@@ -8,6 +8,6 @@
 
 ### Live Links
 
-Frontend:(https://bookmanagement-frontend-git-main-ajayv2001s-projects.vercel.app/)
+Frontend: https://bookmanagement-frontend-git-main-ajayv2001s-projects.vercel.app/
 
 
