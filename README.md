@@ -10,6 +10,7 @@
 
 live demo: https://bookmanagement-frontend-git-main-ajayv2001s-projects.vercel.app/<br/>
 Backend repo : https://github.com/ajayv2001/bookmanagement-backend
+frontend repo : https://github.com/ajayv2001/bookmanagement-frontend
 
 ## Features Implemented
 ### Core CRUD
