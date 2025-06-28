@@ -2,8 +2,8 @@
 
 ### A full-stack Book Management System built using:
 
--Frontend: React + Bootstrap (Vite)
--Backend: Spring Boot + MongoDB
+-Frontend: React + Bootstrap (Vite)< br / >
+-Backend: Spring Boot + MongoDB< br / >
 -Deployment: Frontend on Vercel, Backend on Render
 
 
