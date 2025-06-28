@@ -48,21 +48,66 @@ Backend repo : https://github.com/ajayv2001/bookmanagement-backend
 ### How to Run Locally
 ## Backend Setup (Spring Boot)
 
- 1.Clone the repo:<br/>
+ 1. Clone the repo:<br/>
 ```
 git clone https://github.com/ajayv2001/bookmanagement-backend.git
 cd bookmanagement-backend
 ```
- 2.Create .env or use application.properties:<br/>
+ 2. Create .env or use application.properties:<br/>
 ```
 spring.data.mongodb.uri=your_mongodb_uri  // create a new cluster in mongodb and get the uri
 server.port=8080
 ```
- 3.Run the app:<br/>
+ 3. Run the app:<br/>
  ```
 ./mvnw spring-boot:run
 ```
 > Ensure you have Java 21 installed locally.
+
+## Frontend Setup (React)
+
+ 1. Clone the repo:<br/>
+```
+git clone https://github.com/ajayv2001/bookmanagement-frontend.git
+cd bookmanagement-frontend
+```
+ 2. Install dependencies:<br/>
+```
+npm install 
+```
+ 3. Update api.js with correct backend URL:<br/>
+ ```
+baseURL: 'http://localhost:8080/api'
+```
+ 4. Run the app:<br/>
+  ```
+npm run dev
+```
+
+## Project Structure
+### Backend 
+
+ ```
+ com.valoriz.bookmanagement
+├── controller
+├── model
+├── repository
+├── service
+└── config
+```
+
+### Frontend
+
+ ```
+src/
+├── components/
+│   ├── AddBooks.jsx
+│   ├── Home.jsx
+│   ├── Navbar.jsx
+│   └── BookPage.jsx
+└── services/
+    └── api.js
+```
 
 
 
