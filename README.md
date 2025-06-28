@@ -4,7 +4,6 @@
 
 → Frontend: React + Bootstrap (Vite)<br/>
 → Backend: Spring Boot + MongoDB<br/>
-→ Deployment: Frontend on Vercel, Backend on Render
-<br>
+→ Deployment: Frontend on Vercel, Backend on Render  <br>
 
 
