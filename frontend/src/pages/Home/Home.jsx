@@ -9,6 +9,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortKey, setSortKey] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [loading, setLoading] = useState(true);
   const booksPerPage = 10;
   const navigate = useNavigate();
 
@@ -17,12 +18,15 @@ export default function Home() {
   }, []);
 
   const fetchAllBooks = async () => {
+    setLoading(true);
     try {
       const response = await getBooks();
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
       toast.error('Failed to fetch books');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,97 +73,108 @@ export default function Home() {
   return (
     <div className="container my-4">
       <ToastContainer />
-      <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-        <h3 className="fw-bold mb-2">Book List</h3>
 
-        {/* Sort Dropdown */}
-        <div className="dropdown mb-2">
-          <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            Sort Options
-          </button>
-          <ul className="dropdown-menu dropdown-menu-end">
-            <li>
-              <button className="dropdown-item" onClick={() => { setSortKey('title'); setSortOrder('asc'); }}>
-                Alphabetical (A-Z)
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" onClick={() => { setSortKey('title'); setSortOrder('desc'); }}>
-                Alphabetical (Z-A)
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" onClick={() => { setSortKey('rating'); setSortOrder('desc'); }}>
-                Rating (High → Low)
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {books.length === 0 ? (
-        <p className="text-center">No books available. Please add some.</p>
-      ) : (
-        <div className="card shadow-sm p-4 bg-light">
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover text-center align-middle">
-              <thead className="table-secondary">
-                <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Genre</th>
-                  <th>ISBN</th>
-                  <th>Rating</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentBooks.map((book) => (
-                  <tr key={book.id || book._id}>
-                    <td
-                      className="text-primary"
-                      style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                      onClick={() => navigate(`/books/${book.id || book._id}`)}
-                    >
-                      {book.title}
-                    </td>
-                    <td>{book.author}</td>
-                    <td>{book.genre}</td>
-                    <td>{book.isbn}</td>
-                    <td>{book.rating}</td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDelete(book.id || book._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
+        </div>
+      ) : (
+        <>
+          <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+            <h3 className="fw-bold mb-2">Book List</h3>
 
-          {/* Pagination */}
-          <div className="d-flex justify-content-center mt-3">
-            <nav>
-              <ul className="pagination flex-wrap">
-                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+            {/* Sort Dropdown */}
+            <div className="dropdown mb-2">
+              <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Sort Options
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button className="dropdown-item" onClick={() => { setSortKey('title'); setSortOrder('asc'); }}>
+                    Alphabetical (A-Z)
+                  </button>
                 </li>
-                {[...Array(totalPages)].map((_, idx) => (
-                  <li key={idx} className={`page-item ${currentPage === idx + 1 ? 'active' : ''}`}>
-                    <button className="page-link" onClick={() => setCurrentPage(idx + 1)}>{idx + 1}</button>
-                  </li>
-                ))}
-                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                <li>
+                  <button className="dropdown-item" onClick={() => { setSortKey('title'); setSortOrder('desc'); }}>
+                    Alphabetical (Z-A)
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => { setSortKey('rating'); setSortOrder('desc'); }}>
+                    Rating (High → Low)
+                  </button>
                 </li>
               </ul>
-            </nav>
+            </div>
           </div>
-        </div>
+
+          {books.length === 0 ? (
+            <p className="text-center">No books available. Please add some.</p>
+          ) : (
+            <div className="card shadow-sm p-4 bg-light">
+              <div className="table-responsive">
+                <table className="table table-bordered table-hover text-center align-middle">
+                  <thead className="table-secondary">
+                    <tr>
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Genre</th>
+                      <th>ISBN</th>
+                      <th>Rating</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentBooks.map((book) => (
+                      <tr key={book.id || book._id}>
+                        <td
+                          className="text-primary"
+                          style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                          onClick={() => navigate(`/books/${book.id || book._id}`)}
+                        >
+                          {book.title}
+                        </td>
+                        <td>{book.author}</td>
+                        <td>{book.genre}</td>
+                        <td>{book.isbn}</td>
+                        <td>{book.rating}</td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={() => handleDelete(book.id || book._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Pagination */}
+              <div className="d-flex justify-content-center mt-3">
+                <nav>
+                  <ul className="pagination flex-wrap">
+                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                      <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                    </li>
+                    {[...Array(totalPages)].map((_, idx) => (
+                      <li key={idx} className={`page-item ${currentPage === idx + 1 ? 'active' : ''}`}>
+                        <button className="page-link" onClick={() => setCurrentPage(idx + 1)}>{idx + 1}</button>
+                      </li>
+                    ))}
+                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                      <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
