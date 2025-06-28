@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://bookmanagement-backend-5.onrender.com', 
+  baseURL: 'https://bookmanagement-backend-5.onrender.com/api', 
 });
 
 // Add Book
